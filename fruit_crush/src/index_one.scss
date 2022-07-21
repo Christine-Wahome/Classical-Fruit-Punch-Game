@@ -1,3 +1,99 @@
+$root: '.c-rainbow';
+
+:root {
+ --color-background: antiquewhite;
+ 
+ --axis-x: 2px;
+ --axis-y: 1rem;
+ --delay: 10;
+ 
+ --color-black: #000;
+ --color-white: #39FF14;
+ --color-orange: #FF10F0;
+ --color-red: #D14B3D;
+ --color-violet: #CF52EB;
+ --color-blue: #44A3F7;
+ --color-green: #5ACB3C;
+ --color-yellow: #DEBF40;
+ 
+ --color-foreground: var(--color-white);
+ --font-name: Righteous;
+}
+
+html, body {
+ font-size: 24px;
+}
+
+body {
+ background-color: var(--color-background);
+ 
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ 
+ font-family: var(--font-name);
+ 
+ height: 100vh;
+}
+
+#{$root} {
+ counter-reset: rainbow;
+ position: relative;
+ display: block;
+ 
+ list-style: none;
+ 
+ padding: 0;
+ margin: 0;
+ 
+ &__layer {
+  --text-color: var(--color-foreground);
+  counter-increment: rainbow; 
+  font-size: 3rem;
+  color: var(--text-color);
+
+  text-shadow:
+   -1px -1px 0 var(--color-black),  
+    1px -1px 0 var(--color-black),
+    -1px 1px 0 var(--color-black),
+     1px 1px 0 var(--color-black),
+   
+     4px 4px 0 rgba(0, 0, 0, .2);
+  
+  animation: rainbow 1.5s ease-in-out infinite;
+  
+  @for $i from 1 through 7 {
+   &:nth-child(#{$i}) {
+    animation-delay: calc( #{$i} / var(--delay) * 1s);
+    left: calc(var(--axis-x) * #{$i});
+    z-index: -#{$i * 10};
+   }
+  }
+  
+  &:not(:first-child) {
+   position: absolute;
+   top: 0;
+  }
+
+  &--white  { --text-color: var(--color-white)}
+  &--orange { --text-color: var(--color-orange)}
+  &--red    { --text-color: var(--color-red)}
+  &--violet { --text-color: var(--color-violet)}
+  &--blue   { --text-color: var(--color-blue)}
+  &--green  { --text-color: var(--color-green)}
+  &--yellow { --text-color: var(--color-yellow)}
+ }
+}
+
+@keyframes rainbow {
+ 0%, 100% {
+  transform: translatey(var(--axis-y)); 
+ }
+ 60% {
+  transform: translatey(calc(var(--axis-y) * -1));
+ }
+} 
+
 .app{
   background-color: antiquewhite;
   display: flex;
@@ -6,6 +102,8 @@
   justify-content: center;
 
 }
+
+
 
 /* customizable snowflake styling */
 .snowflake {
@@ -30,80 +128,12 @@
 color: #000;		
 }
 
-.glitch{
-  font-size: 36px;
-  color: #fa0f0fa0;
-  animation: glitch 820ms infinite;
-  font-weight: 700;
-  text-transform: uppercase;
-  position: relative;
-  font-family: 'Open Sans', sans-serif;
-  font-family: 'Roboto', sans-serif;
-  letter-spacing: 0.5rem;
-  text-shadow: 0.05em 0 0 rgba(255, 0, 0, .75), -0.025em -.05em 0 rgba(0, 255, 0, .75), 0.025em .05em 0 rgba(0, 0, 255, .75);
-  }
-  .glitch2Bedore{
-  font-size: 6rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  font-family: 'Open Sans', sans-serif;
-  font-family: 'Roboto', sans-serif;
-  letter-spacing: 0.5rem;
-  color: white;
-  } @keyframes glitch{
-  0%{
-  text-shadow:
-  0.05em 0 0 rgba(255, 0, 0, .75),
-  -0.025em -.05em 0 rgba(0, 255, 0, .75),
-  0.025em .05em 0 rgba(0, 0, 255, .75);
-  }
-  14%{
-  text-shadow:
-  0.05em 0 0 rgba(255, 0, 0, .75),
-  -0.025em -.05em 0 rgba(0, 255, 0, .75),
-  0.025em .05em 0 rgba(0, 0, 255, .75);
-  }
-  15%{
-  text-shadow:
-  -0.05em -.025em 0 rgba(255, 0, 0, .75),
-  0.025em 0.025em 0 rgba(0, 255, 0, .75),
-  -0.05em -.05em 0 rgba(0, 0, 255, .75);
-  }
-  49%{
-  text-shadow:
-  -0.05em -.025em 0 rgba(255, 0, 0, .75),
-  0.025em 0.025em 0 rgba(0, 255, 0, .75),
-  -0.05em -.05em 0 rgba(0, 0, 255, .75);
-  }
-  50%{
-  text-shadow:
-  0.025em 0.05em 0 rgba(255, 0, 0, .75),
-  0.05em 0 0 rgba(0, 255, 0, .75),
-  0 -0.05em 0 rgba(0, 0, 255, .75);
-  }
-  99%{
-  text-shadow:
-  0.025em 0.05em 0 rgba(255, 0, 0, .75),
-  0.05em 0 0 rgba(0, 255, 0, .75),
-  0 -0.05em 0 rgba(0, 0, 255, .75);
-  }
-  100%{
-  text-shadow:
-  -0.025em 0 0 rgba(255, 0, 0, .75),
-  -0.025em -0.025em 0 rgba(0, 255, 0, .75),
-  -0.025em -0.05em 0 rgba(0, 0, 255, .75);
-  }
-  }
-  .containerGlitch{
-  margin-top: 40px;
-  width: 100%;
-  max-width: 1175px;
-  height: auto;
-  }
+
 
 .game{
   width: 560px;
   height: 560px;
+  padding-top: 40px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -113,6 +143,10 @@ color: #000;
   height: 70px;
 }
 
+.refresh:hover{
+  color: #25f52cd1;
+}
+
 .score-board {
   display: flex;
   font-display: rgb(35, 206, 64);
@@ -120,10 +154,13 @@ color: #000;
 }
 
 .score-box{
+  position : absolute;
   display: flex;
-  direction: 'row';
-  align-items: center;
-  justify-content: center;
+  left: 300px;
+  top: 700px;
+  margin-top: -330px;
+  
+  
 }
 
 .btn{

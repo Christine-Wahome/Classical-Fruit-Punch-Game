@@ -3,6 +3,7 @@ import { Stack, Box, Typography } from '@mui/material';
 
 import ScoreBoard from './components/ScoreBoard';
 import StyleScreen from './components/StyleScreen';
+import TitleStyle from './components/TitleStyle';
 
 import banana from './imagess/banana.png'
 import images from './imagess/images.png'
@@ -116,8 +117,9 @@ const App = () => {
 
 
     if ((currentColorArrangement[i + width]) === '') {
+      let randomNum = Math.floor(Math.random() * candyColors.length)
       currentColorArrangement[i +width] = currentColorArrangement[i]
-      currentColorArrangement[i] = ''
+      currentColorArrangement[i] = candyColors[randomNum]
 
     }
   }}
@@ -177,7 +179,9 @@ const App = () => {
   }
 
   const changeValue = () => {
+  
     setScoreDisplay((score) => 0)
+    
   }
 
   const replaceFruit = () => {
@@ -204,6 +208,8 @@ const App = () => {
     }
     //console.log(randomColorArrangement);
     setCurrentColorArrangement(randomColorArrangement);
+
+    
   }
   
   //console.log(currentColorArrangement);
@@ -224,7 +230,7 @@ const App = () => {
       checkForRowOfThree();
       moveIntoSquareBelow();
       setCurrentColorArrangement([...currentColorArrangement])
-
+      
     }, 100)
     return () => clearInterval(timer)
     
@@ -235,13 +241,23 @@ const App = () => {
 
   return (
     <Stack className='app' >
+      <Box position = 'absolute'
+       display= 'flex'
+       flex-wrap = 'wrap'
+       right = '-300px'
+       top = '30px'
+       width = '700px'
+       height = '900px'
+       margin-top = '-330px' >
+         <TitleStyle />
+      </Box>
       <StyleScreen />
-      <center>
-        <div className="containerGlitch">
-          <p className="glitch" id="textGlitch"> WELOME TO FRUIT PUNCH </p>
-        </div>
-      </center>
-      <Box className='game'>
+      <Typography className='refresh' onClick={createBoard} 
+      position = 'absolute' display= 'flex' flex-wrap = 'wrap' left = '35px' 
+      top = '50px' fontSize='30px' fontFamily= 'cursive' color= '#f51fb8cc'>
+      😃Refresh Board and start 🙃
+      </Typography>
+      <Box className='game' >
         {currentColorArrangement.map((candyColor,index ) => (
           <img 
           key={index}
@@ -259,17 +275,17 @@ const App = () => {
           />
         ))}
 
-      </Box>
-      <Typography fontSize='22px' fontFamily= 'cursive' color= '#f51fb8cc' >
-        Score
-       <ScoreBoard score={scoreDisplay} />
+      </Box >
+      <Typography justifyContent='flex-end' fontSize='30px' fontFamily= 'cursive' color= '#f51fb8cc' >
+        Score🤑
       </Typography>
-      
-      <Box className='score-box' component="span">
+      <ScoreBoard score={scoreDisplay} />
+      <Box className='score-box'  >
       <button className='btn'  onClick={changeValue}>Start!</button>
       </Box>
       
     </Stack>
+    
   );
 }
 
