@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Stack, Box, Typography } from '@mui/material';
+import { motion } from 'framer-motion';
 
 import ScoreBoard from './components/ScoreBoard';
 import StyleScreen from './components/StyleScreen';
@@ -28,7 +29,8 @@ const App = () => {
   const [squareBeingDragged, setSquareBeingDragged] = useState(null)
   const [squareBeingReplaced, setSquareBeingReplaced] = useState(null)
   const [scoreDisplay, setScoreDisplay] = useState(0)
- // const [addFruit, setAddFruit ] = useState(null)
+  //const [winner, setWinner]= useState('');
+
 
 
 
@@ -40,6 +42,7 @@ const App = () => {
       const isBlank = currentColorArrangement[i] === blank
 
       if (columnOfFour.every(square => currentColorArrangement[square] === decidedColor && !isBlank)) {
+      
         setScoreDisplay((score) => score + 4)
         columnOfFour.forEach(square => currentColorArrangement[square] = blank)
         return true;
@@ -56,6 +59,7 @@ const App = () => {
       const isBlank = currentColorArrangement[i] === blank
 
       if (columnOfThree.every(square => currentColorArrangement[square] === decidedColor && !isBlank)) {
+        
         setScoreDisplay((score) => score + 3)
         columnOfThree.forEach(square => currentColorArrangement[square] = blank)
         return true;
@@ -107,7 +111,7 @@ const App = () => {
       const firstRow = [0, 1, 2, 3, 4, 5, 6, 7]
       const isFirstRow = firstRow.includes(i)
 
-      if(isFirstRow && currentColorArrangement[i] === '') {
+      if(isFirstRow && currentColorArrangement[i] === blank) {
         let randomNum = Math.floor(Math.random() * candyColors.length)
         currentColorArrangement[i] = candyColors[randomNum]
       }
@@ -116,7 +120,7 @@ const App = () => {
     
 
 
-    if ((currentColorArrangement[i + width]) === '') {
+    if ((currentColorArrangement[i + width]) === blank) {
       let randomNum = Math.floor(Math.random() * candyColors.length)
       currentColorArrangement[i +width] = currentColorArrangement[i]
       currentColorArrangement[i] = candyColors[randomNum]
@@ -184,7 +188,9 @@ const App = () => {
     
   }
 
-  const replaceFruit = () => {
+
+
+ /* const replaceFruit = () => {
     //const isBlank = currentColorArrangement[i] === blank
     const randomColorArray = []
 
@@ -195,7 +201,7 @@ const App = () => {
       }
       setCurrentColorArrangement(randomColorArray)
     }
-  }
+  }*/
 
 
 
@@ -216,11 +222,9 @@ const App = () => {
 
   useEffect(() => {
     createBoard();
-  }, [blank]);
-
-  useEffect(() => {
-    replaceFruit();
   }, []);
+
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -252,11 +256,11 @@ const App = () => {
          <TitleStyle />
       </Box>
       <StyleScreen />
-      <Typography className='refresh' onClick={createBoard} 
+      {scoreDisplay>30 && (<Typography className='refresh' onClick={createBoard} 
       position = 'absolute' display= 'flex' flex-wrap = 'wrap' left = '35px' 
-      top = '50px' fontSize='30px' fontFamily= 'cursive' color= '#f51fb8cc'>
-      😃Refresh Board and start 🙃
-      </Typography>
+      top = '50px' fontSize='30px' fontFamily= 'cursive' color= '#f51fb8cc' onClick={changeValue}>
+      😃 start new level 🙃
+      </Typography>)}
       <Box className='game' >
         {currentColorArrangement.map((candyColor,index ) => (
           <img 
@@ -280,6 +284,12 @@ const App = () => {
         Score🤑
       </Typography>
       <ScoreBoard score={scoreDisplay} />
+      {scoreDisplay>30 && (
+        <Typography position = 'absolute' display= 'flex' flex-wrap = 'wrap' right = '35px' 
+        top = '600px' fontSize='40px' fontFamily= 'cursive' color= '#39FF14'>
+          It's a punch 🍹WINNER 🤩
+        </Typography>
+      )}
       <Box className='score-box'  >
       <button className='btn'  onClick={changeValue}>Start!</button>
       </Box>
